@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对标账号配置</title>
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .platform-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .platform-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .platform-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        .platform-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .account-list {
+            margin-bottom: 15px;
+        }
+        .account-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .account-item input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .remove-btn {
+            background-color: #ff4d4f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin-left: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .add-btn {
+            background-color: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        .add-btn-icon {
+            margin-right: 4px;
+            font-weight: bold;
+        }
+        .save-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .save-btn {
+            background-color: #52c41a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .save-status {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .note {
+            background-color: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        .note h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #1890ff;
+        }
+        .note p {
+            margin: 5px 0;
+        }
+        .note ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        .coming-soon {
+            opacity: 0.6;
+            position: relative;
+        }
+        .coming-soon::after {
+            content: "即将支持";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #faad14;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>对标账号配置</h1>
+    
+    <div class="note">
+        <h3>使用说明</h3>
+        <p>通过本页面配置要监控的对标账号，系统会自动收集这些账号的最新内容并保存到飞书多维表格。</p>
+        <ul>
+            <li>支持的平台：Twitter/X、小红书</li>
+            <li>对于Twitter账号，直接输入用户名即可（如 elonmusk）</li>
+            <li>对于小红书账号，请输入用户ID（如 profile/ID号码）</li>
+            <li>每次保存配置后，系统会立即更新环境变量</li>
+        </ul>
+    </div>
+    
+    <div id="platforms-container">
+        <!-- Twitter平台 -->
+        <div class="platform-section" data-platform="twitter">
+            <div class="platform-header">
+                <span class="platform-icon">🐦</span>
+                <h2 class="platform-title">Twitter / X</h2>
+            </div>
+            <div class="account-list" id="twitter-accounts">
+                <!-- 账号输入框将动态添加 -->
+            </div>
+            <button class="add-btn" onclick="addAccount('twitter')">
+                <span class="add-btn-icon">+</span> 添加账号
+            </button>
+        </div>
+        
+        <!-- 小红书平台 -->
+        <div class="platform-section" data-platform="xiaohongshu">
+            <div class="platform-header">
+                <span class="platform-icon">📖</span>
+                <h2 class="platform-title">小红书</h2>
+            </div>
+            <div class="account-list" id="xiaohongshu-accounts">
+                <!-- 账号输入框将动态添加 -->
+            </div>
+            <button class="add-btn" onclick="addAccount('xiaohongshu')">
+                <span class="add-btn-icon">+</span> 添加账号
+            </button>
+        </div>
+        
+        <!-- 其他平台（未来支持） -->
+        <div class="platform-section coming-soon" data-platform="bilibili">
+            <div class="platform-header">
+                <span class="platform-icon">📺</span>
+                <h2 class="platform-title">哔哩哔哩 (B站)</h2>
+            </div>
+            <div class="account-list">
+                <p style="color: #999; font-style: italic;">该平台功能开发中，敬请期待...</p>
+            </div>
+        </div>
+        
+        <div class="platform-section coming-soon" data-platform="zhihu">
+            <div class="platform-header">
+                <span class="platform-icon">❓</span>
+                <h2 class="platform-title">知乎</h2>
+            </div>
+            <div class="account-list">
+                <p style="color: #999; font-style: italic;">该平台功能开发中，敬请期待...</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="save-container">
+        <button class="save-btn" onclick="saveConfiguration()">保存配置</button>
+        <div class="save-status" id="save-status"></div>
+    </div>
+    
+    <script>
+        // 初始化配置
+        let currentConfig = {
+            twitter: [],
+            xiaohongshu: []
+        };
+        
+        // 页面加载时从本地存储或服务器获取配置
+        window.onload = function() {
+            loadConfiguration();
+        };
+        
+        // 加载配置
+        function loadConfiguration() {
+            // 先尝试从本地存储加载配置
+            const storedConfig = localStorage.getItem('targetAccountsConfig');
+            if (storedConfig) {
+                try {
+                    currentConfig = JSON.parse(storedConfig);
+                    
+                    // 为每个平台渲染账号
+                    for (const platform in currentConfig) {
+                        const accounts = currentConfig[platform];
+                        accounts.forEach(account => {
+                            addAccount(platform, account);
+                        });
+                    }
+                    console.log('已从本地存储加载配置');
+                    return;
+                } catch (e) {
+                    console.error('加载配置失败:', e);
+                }
+            }
+            
+            // 如果没有本地存储，尝试从服务器获取
+            fetch('/get-target-accounts')
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('无法获取配置');
+                })
+                .then(config => {
+                    currentConfig = config;
+                    
+                    // 为每个平台渲染账号
+                    for (const platform in currentConfig) {
+                        const accounts = currentConfig[platform];
+                        accounts.forEach(account => {
+                            addAccount(platform, account);
+                        });
+                    }
+                    console.log('已从服务器加载配置');
+                })
+                .catch(error => {
+                    console.error('从服务器加载配置失败:', error);
+                    // 加载默认账号示例
+                    addAccount('twitter', 'OpenAI');
+                    addAccount('twitter', 'AnthropicAI');
+                    addAccount('xiaohongshu', '用户ID示例');
+                });
+        }
+        
+        // 添加账号输入框
+        function addAccount(platform, value = '') {
+            const accountList = document.getElementById(`${platform}-accounts`);
+            if (!accountList) return; // 平台不存在或未启用
+            
+            const accountItem = document.createElement('div');
+            accountItem.className = 'account-item';
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = value;
+            input.placeholder = platform === 'twitter' ? '输入Twitter用户名' : '输入小红书用户ID';
+            input.dataset.platform = platform;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.textContent = '删除';
+            removeBtn.onclick = function() {
+                accountList.removeChild(accountItem);
+            };
+            
+            accountItem.appendChild(input);
+            accountItem.appendChild(removeBtn);
+            accountList.appendChild(accountItem);
+        }
+        
+        // 保存配置
+        function saveConfiguration() {
+            // 收集所有输入的账号
+            const newConfig = {
+                twitter: [],
+                xiaohongshu: []
+            };
+            
+            // 获取Twitter账号
+            const twitterInputs = document.querySelectorAll('#twitter-accounts input');
+            twitterInputs.forEach(input => {
+                const value = input.value.trim();
+                if (value) {
+                    newConfig.twitter.push(value);
+                }
+            });
+            
+            // 获取小红书账号
+            const xiaohongshuInputs = document.querySelectorAll('#xiaohongshu-accounts input');
+            xiaohongshuInputs.forEach(input => {
+                const value = input.value.trim();
+                if (value) {
+                    newConfig.xiaohongshu.push(value);
+                }
+            });
+            
+            // 更新当前配置
+            currentConfig = newConfig;
+            
+            // 保存到本地存储
+            localStorage.setItem('targetAccountsConfig', JSON.stringify(currentConfig));
+            
+            // 转换为环境变量格式
+            const envFormat = {};
+            for (const platform in currentConfig) {
+                if (currentConfig[platform].length > 0) {
+                    envFormat[`${platform.toUpperCase()}_ACCOUNTS`] = currentConfig[platform].join(',');
+                }
+            }
+            
+            // 构建TARGET_ACCOUNTS变量
+            const targetAccounts = [];
+            for (const platform in currentConfig) {
+                if (currentConfig[platform].length > 0) {
+                    const platformAccounts = currentConfig[platform].map(account => `${platform}:${account}`);
+                    targetAccounts.push(...platformAccounts);
+                }
+            }
+            
+            if (targetAccounts.length > 0) {
+                envFormat['TARGET_ACCOUNTS'] = targetAccounts.join(',');
+            }
+            
+            // 显示保存状态
+            const saveStatus = document.getElementById('save-status');
+            saveStatus.textContent = '正在保存...';
+            saveStatus.style.color = '#1890ff';
+            
+            // 向服务器发送配置请求
+            fetch('/save-target-accounts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(envFormat)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('保存到服务器失败');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('服务器保存成功:', data);
+                saveStatus.textContent = '配置已保存！系统将使用新配置进行下一次数据采集';
+                saveStatus.style.color = '#52c41a';
+            })
+            .catch(error => {
+                console.error('保存到服务器失败:', error);
+                // 显示错误消息，但仍然保存到了本地
+                saveStatus.textContent = '保存到服务器失败，但已保存到本地。请检查网络连接或联系管理员。';
+                saveStatus.style.color = '#faad14';
+            });
+        }
+    </script>
+</body>
+</html>
