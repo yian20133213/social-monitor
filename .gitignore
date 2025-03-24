@@ -1,0 +1,24 @@
+# 环境变量文件(包含API密钥)
+.env
+
+# Python缓存文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境
+venv/
+env/
+ENV/
+
+# 用户数据
+data/user_data.json
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE相关文件
+.idea/
+.vscode/
+*.swp

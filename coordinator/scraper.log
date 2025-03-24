@@ -1,0 +1,10 @@
+2025-03-24 18:52:13,706 - __main__ - INFO - 正在抓取账号 competitor1 的数据
+2025-03-24 18:52:17,806 - __main__ - ERROR - 抓取Twitter页面出错: HTTPConnectionPool(host='localhost', port=3001): Max retries exceeded with url: /tools (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000023928997790>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-03-24 18:52:17,807 - __main__ - INFO - 已获取 0 条推文
+2025-03-24 18:52:17,809 - __main__ - INFO - 正在抓取账号 competitor2 的数据
+2025-03-24 18:52:21,904 - __main__ - ERROR - 抓取Twitter页面出错: HTTPConnectionPool(host='localhost', port=3001): Max retries exceeded with url: /tools (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000023928992710>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-03-24 18:52:21,905 - __main__ - INFO - 已获取 0 条推文
+2025-03-24 18:52:21,905 - __main__ - INFO - 正在抓取账号 competitor3 的数据
+2025-03-24 18:52:25,991 - __main__ - ERROR - 抓取Twitter页面出错: HTTPConnectionPool(host='localhost', port=3001): Max retries exceeded with url: /tools (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000023928998810>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-03-24 18:52:25,992 - __main__ - INFO - 已获取 0 条推文
+2025-03-24 18:52:25,992 - __main__ - WARNING - 未获取到任何推文数据
